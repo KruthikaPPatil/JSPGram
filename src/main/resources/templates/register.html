@@ -74,43 +74,51 @@
 <body>
     <div class="register-container">
         <h2>Create Account</h2>
-        <form>
+        <form action="/register" method="post" th:object="${user}">
             <div class="form-group">
                 <label for="firstname">First Name</label>
-                <input type="text" id="firstname" name="firstname" required>
+                <input th:field="*{firstname}" type="text" id="firstname" name="firstname" >
+                <span th:errors="*{firstname}"></span>
             </div>
             <div class="form-group">
                 <label for="lastname">Last Name</label>
-                <input type="text" id="lastname" name="lastname" required>
+                <input th:field="*{lastname}" type="text" id="lastname" name="lastname" >
+                <span th:errors="*{lastname}"></span>
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <input th:field="*{username}" type="text" id="username" name="username" >
+                <span th:errors="*{username}"></span>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input th:field="*{email}" type="text" id="email" name="email" >
+                <span th:errors="*{email}"></span>
             </div>
             <div class="form-group">
                 <label for="mobile">Mobile Number</label>
-                <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+                <input  th:field="*{mobile}" type="text" id="mobile" name="mobile"  >
+                <span th:errors="*{mobile}"></span>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input th:field="*{password}"  type="text" id="password" name="password" >
+                <span th:errors="*{password}"></span>
             </div>
             <div class="form-group">
-                <label for="confirm-password">Confirm Password</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
+                <label for="confirmpassword">Confirm Password</label>
+                <input th:field="*{confirmpassword}" type="text" id="confirmpassword" name="confirmpassword" >
+                <span th:errors="*{confirmpassword}"></span>
             </div>
             <div class="gender-group">
                 <label>Gender:</label>
-                <input type="radio" id="male" name="gender" value="male" required>
+                <input th:field="*{gender}" type="radio" id="male" name="gender" value="male" >
                 <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="female">
+                <input th:field="*{gender}"  type="radio" id="female" name="gender" value="female">
                 <label for="female">Female</label>
-                <input type="radio" id="other" name="gender" value="other">
+                <input th:field="*{gender}"  type="radio" id="other" name="gender" value="other">
                 <label for="other">Other</label>
+                <span th:errors="*{gender}"></span>
             </div>
             <button type="submit" class="signup-btn">Sign Up</button>
         </form>
