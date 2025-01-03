@@ -9,8 +9,10 @@ import org.springframework.validation.BindingResult;
 
 import com.org.jsp_gram.dto.User;
 import com.org.jsp_gram.helper.AES;
+import com.org.jsp_gram.helper.EmailSender;
 import com.org.jsp_gram.repository.UserRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Service
@@ -19,6 +21,9 @@ public class UserService {
 	
 	@Autowired
 	UserRepository repository;
+	
+	@Autowired
+	EmailSender emailSender;
 
 	public String loadRegister(ModelMap map, User user) {
 		map.put("user", user);
@@ -26,7 +31,7 @@ public class UserService {
 	}
 	
 	
-	 public String register(@Valid User user,BindingResult result) {
+	 public String register(User user,BindingResult result,HttpSession session) {
 		  if(!user.getPassword().equals(user.getConfirmpassword()))
 			  result.rejectValue("confirmpassword", "error.confirmpassword", "passwords not matching");
 		  
@@ -46,22 +51,26 @@ public class UserService {
 			  user.setPassword(AES.encrypt(user.getPassword()));
 			  int otp = new Random().nextInt(100000,1000000);
 			  user.setOtp(otp);
+			  //emailSender.sendOtp(user.getEmail(), otp, user.getFirstname());
 			  System.err.println(otp);
 			  repository.save(user);
+			  session.setAttribute("pass", "otp sent success");
 			  return "redirect:/otp/"+user.getId();
 		  }
 	  }
 	 
 	 
-	 public String verifyOtp(int otp,int id) {
+	 public String verifyOtp(int otp,int id,HttpSession session) {
 		 User user = repository.findById(id).get();
 		 if(user.getOtp()==otp) {
 			 user.setVerified(true);
 			 user.setOtp(0);
 			 repository.save(user);
+			 session.setAttribute("pass", "account created success");
 			 return "redirect:/login";
 		 }
 		 else {
+			 session.setAttribute("fail", "invalid otp, Try again");
 			 return "redirect:/otp/"+id;
 		 }
 	 }

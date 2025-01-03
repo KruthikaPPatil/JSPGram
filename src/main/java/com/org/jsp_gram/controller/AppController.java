@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.org.jsp_gram.dto.User;
 import com.org.jsp_gram.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -34,8 +35,8 @@ public class AppController {
 	  }
 	  
 	  @PostMapping("/register")
-	  public String register(@Valid User user,BindingResult result) {
-		  return service.register(user, result);
+	  public String register(@Valid User user,BindingResult result,HttpSession session) {
+		  return service.register(user, result,session);
 	  }
 	  
 	  
@@ -46,8 +47,8 @@ public class AppController {
 	  }
 	  
 	  @PostMapping("/verify-otp")
-	  public String verifyOtp(@RequestParam int otp,@RequestParam int id) {
-		  return service.verifyOtp(otp, id);
+	  public String verifyOtp(@RequestParam int otp,@RequestParam int id,HttpSession session) {
+		  return service.verifyOtp(otp, id,session);
 	  }
 	  
 	  

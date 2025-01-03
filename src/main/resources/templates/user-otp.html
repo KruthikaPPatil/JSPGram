@@ -43,6 +43,12 @@
     </style>
 </head>
 <body>
+
+    <div class="message">
+        <h3 style="color: green;" th:text="${session.pass}"></h3>
+        <h3 style="color: red;" th:text="${session.fail}"></h3>
+        <th:block th:text="${@messageRemover.remove()}"></th:block>
+        </div>
    
     <div class="otp-container">
         <h2>OTP Verification</h2>
