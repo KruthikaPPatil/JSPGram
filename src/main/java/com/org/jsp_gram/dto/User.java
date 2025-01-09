@@ -52,5 +52,8 @@ public class User {
 	private int otp;
 	
 	private boolean verified;
+	
+	private String bio;
+	private String imageUrl;
 	 
 }
