@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.org.jsp_gram.dto.Post;
 import com.org.jsp_gram.dto.User;
 import com.org.jsp_gram.service.UserService;
 
@@ -73,8 +74,8 @@ public class AppController {
 		}
 	  
 	  @GetMapping("/profile")
-		public String loadProfile(HttpSession session) {
-			return service.profile(session);
+		public String loadProfile(HttpSession session,ModelMap map) {
+			return service.profile(session,map);
 		}
 		
 		@GetMapping("/edit-profile")
@@ -86,6 +87,30 @@ public class AppController {
 		public String updateProfile(HttpSession session,@RequestParam MultipartFile image,@RequestParam String bio) {
 			return service.updateProfile(session,image,bio);
 		}
-	  
+		
+		@GetMapping("/add-post")
+		public String loadAddPost(ModelMap map,HttpSession session) {
+			return service.loadAddPost(map,session);
+		}
+		
+		@PostMapping("/add-post")
+		public String addPost(Post post,HttpSession session) {
+			return service.addPost(post,session);
+		}
+		
+		@GetMapping("/delete-post/{id}")
+		public String delete(@PathVariable int id,HttpSession session) {
+			return service.delete(id,session);
+		}
+		
+		@GetMapping("/edit-post/{id}")
+		public String editProfile(@PathVariable int id,ModelMap map,HttpSession session) {
+		    return service.editPost(id,map,session);
+		}
+		
+		@PostMapping("/update-post")
+		public String updatePost(Post post,HttpSession session)  {
+			return service.updatePost(post,session);
+		}
 	  
 }
