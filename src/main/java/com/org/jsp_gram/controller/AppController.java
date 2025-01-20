@@ -112,5 +112,15 @@ public class AppController {
 		public String updatePost(Post post,HttpSession session)  {
 			return service.updatePost(post,session);
 		}
+		
+		@GetMapping("/suggestions")
+		public String suggestions(HttpSession session,ModelMap map) {
+			return service.viewSuggestions(session,map);
+		}
+		
+		@GetMapping("/follow/{id}")
+		public String follow(@PathVariable int id,HttpSession session) {
+			return service.followUser(id,session);
+		}
 	  
 }

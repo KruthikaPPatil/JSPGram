@@ -1,5 +1,6 @@
 package com.org.jsp_gram.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -229,7 +230,8 @@ public class UserService {
 				Post post = postRepository.findById(id).get();
 				map.put("post", post);
 				return "edit-post.html";
-			} else {
+			} else
+			{
 				session.setAttribute("fail", "Invalid Session");
 				return "redirect:/login";
 			}
@@ -253,6 +255,49 @@ public class UserService {
 			return "redirect:/login";
 		}
 		
+	}
+	
+	public String viewSuggestions(HttpSession session, ModelMap map) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			List<User> suggestions = repository.findByVerifiedTrue();
+			List<User> usersToRemove = new ArrayList<User>();
+			for (User suggestion : suggestions) {
+				if (suggestion.getId() == user.getId()) {
+					usersToRemove.add(suggestion);
+				}
+				for (User followingUser : user.getFollowing()) {
+					if (followingUser.getId() == suggestion.getId()) {
+						usersToRemove.add(suggestion);
+					}
+				}
+			}
+			if (suggestions.isEmpty()) {
+				session.setAttribute("fail", "No Suggestions");
+				return "redirect:/profile";
+			} else {
+				suggestions.removeAll(usersToRemove);
+				map.put("suggestions", suggestions);
+				return "suggestions.html";
+			}
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
+	}
+	public String followUser(int id, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			User folllowedUser = repository.findById(id).get();
+			user.getFollowing().add(folllowedUser);
+			folllowedUser.getFollowers().add(user);
+			repository.save(user);
+			repository.save(folllowedUser);
+			return "redirect:/profile";
+		} else {
+			session.setAttribute("fail", "Invalid Session");
+			return "redirect:/login";
+		}
 	}
 
 }
