@@ -64,8 +64,8 @@ public class AppController {
 	  }
 	  
 	  @GetMapping("/home")
-	  public String loadHome(HttpSession session) {
-		  return service.loadHome(session);
+	  public String loadHome(HttpSession session,ModelMap map) {
+		  return service.loadHome(session,map);
 	  }
 	  
 	  @GetMapping("/logout")
@@ -138,5 +138,26 @@ public class AppController {
 			return service.unfollow(session,id);
 		}
 		
-	  
+		@GetMapping("/view-profile/{id}")
+		public String viewProfile(@PathVariable int id,HttpSession session,ModelMap map) {
+			return service.viewProfile(id,session,map);
+		}
+		@GetMapping("/like/{id}")
+		public String likePost(@PathVariable int id,HttpSession session) {
+			return service.likePost(id,session);
+		}
+		
+		@GetMapping("/dislike/{id}")
+		public String dislikePost(@PathVariable int id,HttpSession session) {
+			return service.dislikePost(id,session);
+		}
+		
+		@GetMapping("/comment/{id}")
+		public String loadCommentPage(@PathVariable int id, HttpSession session, ModelMap map) {
+			return service.loadCommentPage(id, session, map);
+		}
+		@PostMapping("/comment/{id}")
+		public String comment(@PathVariable int id, HttpSession session, @RequestParam String comment) {
+			return service.comment(id,session,comment);
+		}
 }
