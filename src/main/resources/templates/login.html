@@ -7,8 +7,8 @@
     <title>Login Page</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,80 +17,110 @@
         }
         .login-container {
             background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 300px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 350px;
+            transition: transform 0.3s ease;
+        }
+        .login-container:hover {
+            transform: translateY(-5px);
         }
         .login-container h2 {
             text-align: center;
-            color: #333;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 28px;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #666;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 500;
         }
         .form-group input {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
             box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52,152,219,0.3);
         }
         .login-btn {
             width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 12px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
         .login-btn:hover {
-            background-color: #45a049;
+            background: linear-gradient(135deg, #2980b9 0%, #2573a7 100%);
+            transform: translateY(-2px);
         }
         .register-link {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
         }
         .register-link a {
-            color: #4CAF50;
+            color: #3498db;
             text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
         .register-link a:hover {
-            text-decoration: underline;
+            color: #2980b9;
+        }
+        .message {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        input::placeholder {
+            color: #bdc3c7;
         }
     </style>
 </head>
 <body>
-
     <div class="message">
         <h3 style="color: green;" th:text="${session.pass}"></h3>
         <h3 style="color: red;" th:text="${session.fail}"></h3>
         <th:block th:text="${@messageRemover.remove()}"></th:block>
-        </div>
+    </div>
             
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Welcome Back</h2>
         <form action="/login" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Username">
+                <input type="text" id="username" name="username" placeholder="Enter your username">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="password" id="password" name="password" placeholder="Enter your password">
             </div>
-            <button type="submit" class="login-btn">Login</button>
+            <button type="submit" class="login-btn">Sign In</button>
         </form>
         <div class="register-link">
             <p>Don't have an account? <a href="/register">Register here</a></p>
         </div>
     </div>
-   
 </body>
 </html>

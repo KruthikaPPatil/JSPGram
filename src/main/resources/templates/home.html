@@ -8,104 +8,308 @@
 
     <style>
         :root {
-            --primary-color: #0095f6;
-            --secondary-color: #00376b;
-            --background-color: #fafafa;
-            --border-color: #dbdbdb;
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+    
         body {
-            background-color: var(--background-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            margin: 0;
+            min-height: 100vh;
         }
+    
         .navbar {
-            background-color: white;
-            border-bottom: 1px solid var(--border-color);
-            padding: 0.75rem 2rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+        background: white;
+        padding: 15px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo img {
+        height: 40px;
+        transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-right {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+    
+    .profile-button, .logout-button {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .profile-button {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        color: white;
+    }
+
+    .logout-button {
+        background: #e74c3c;
+        color: white;
+    }
+    .message {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        padding: 10px 20px;
+        border-radius: 8px;
+        animation: slideDown 0.5s ease;
+    }
+
+    .success-message {
+        color: #2ecc71;
+        background: rgba(46, 204, 113, 0.1);
+    }
+
+    .error-message {
+        color: #e74c3c;
+        background: rgba(231, 76, 60, 0.1);
+    }
+
+    @keyframes slideDown {
+        from { transform: translate(-50%, -20px); opacity: 0; }
+        to { transform: translate(-50%, 0); opacity: 1; }
+    }
+
+    .profile-button:hover, .logout-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 768px) {
         .nav-content {
-            max-width: 975px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 0 15px;
         }
+
         .logo img {
-            width: 103px;
-            height: auto;
+            height: 35px;
         }
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
+
+        .profile-button, .logout-button {
+            padding: 6px 15px;
+            font-size: 13px;
         }
-        .profile-button,
-        .logout-button {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .profile-button {
-            background: none;
-            border: none;
-            color: var(--secondary-color);
-        }
-        .logout-button {
-            background-color: var(--primary-color);
-            border: none;
-            color: white;
-        }
+    }
         .main-content {
-            max-width: 600px;
-            margin: 100px auto 0;
+            max-width: 800px;
+            margin: 120px auto 0;
             padding: 2rem;
             text-align: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
+    
+        .main-content:hover {
+            transform: translateY(-5px);
+        }
+    
         .all-caught-up {
             padding: 3rem 0;
+            animation: fadeIn 0.5s ease-out;
         }
+    
         .checkmark-circle {
-            width: 100px;
-            height: 100px;
-            background-color: var(--primary-color);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             border-radius: 50%;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 5px 15px rgba(46,204,113,0.3);
+            transition: transform 0.3s ease;
         }
+    
+        .checkmark-circle:hover {
+            transform: scale(1.05);
+        }
+    
         .checkmark-circle svg {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             color: white;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
         }
+    
         .caught-up-text {
-            font-size: 1.5rem;
-            color: #262626;
-            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
+    
         .caught-up-subtext {
-            color: #8e8e8e;
-            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
         }
+    
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
         @media (max-width: 768px) {
-            .navbar {
-                padding: 0.75rem 1rem;
+            .main-content {
+                margin: 100px 20px 0;
+                padding: 1.5rem;
             }
-            .nav-content {
-                padding: 0 1rem;
+            
+            .checkmark-circle {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .caught-up-text {
+                font-size: 1.5rem;
+            }
+            
+            .caught-up-subtext {
+                font-size: 0.875rem;
             }
         }
+        
+.posts-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.post-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.username {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.post-image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.post-content {
+    padding: 15px;
+}
+
+.caption {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.post-time {
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+.engagement-metrics {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+}
+
+.action-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.like-button {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.comment-button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.comments-section {
+    padding: 15px;
+    background: #f8f9fa;
+}
+
+.comment {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-username {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 8px;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -129,23 +333,41 @@
     
     <main class="main-content">
     
-    <div th:if="${posts}">
-            <div th:each="post:${posts}">
-                <img th:if="${post.user.imageUrl!=null}" height="50px" width="50px" th:src="${post.user.imageUrl}">
-                <img th:if="${post.user.imageUrl==null}" height="50px" width="50px" src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png" alt="Profile Picture" class="profile-picture">
-                <span th:text="${post.user.username}"></span>
-                <img height="250px" width="250px" th:src="${post.imageUrl}">
-                <span th:text="${post.caption}"></span>
-                <span th:text="${post.postedTime}"></span>
- <span th:text="${post.likedUsers.size()}+'Likes'"></span>
-                <a th:if="${!post.hasLiked(session.user.id)}" th:href="'/like/'+${post.id}"><button>Like</button></a>
-                <a th:if="${post.hasLiked(session.user.id)}" th:href="'/dislike/'+${post.id}"><button>Dis-Like</button></a>
-                 <span th:text="${post.comments.size()}"></span>
-                    <a th:href="'/comment/'+${post.id}"><button class="action-button comment-button">Comment</button></a>
-                    <div th:each="comment:${post.comments}">
-                        <span th:text="${comment.user.username}"></span>
+        <div th:if="${posts}" class="posts-container">
+            <div th:each="post:${posts}" class="post-card">
+                <div class="post-header">
+                    <img th:if="${post.user.imageUrl!=null}" th:src="${post.user.imageUrl}">
+                    <img th:if="${post.user.imageUrl==null}" src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png" alt="Profile Picture">
+                    <span class="username" th:text="${post.user.username}"></span>
+                </div>
+                
+                <img class="post-image" th:src="${post.imageUrl}">
+                
+                <div class="post-content">
+                    <p class="caption" th:text="${post.caption}"></p>
+                    <span class="post-time" th:text="${post.postedTime}"></span>
+                </div>
+                
+                <div class="engagement-metrics">
+                    <span th:text="${post.likedUsers.size()}+' Likes'"></span>
+                    <a th:if="${!post.hasLiked(session.user.id)}" th:href="'/like/'+${post.id}">
+                        <button class="action-button like-button">Like</button>
+                    </a>
+                    <a th:if="${post.hasLiked(session.user.id)}" th:href="'/dislike/'+${post.id}">
+                        <button class="action-button like-button">Dis-like</button>
+                    </a>
+                    <span th:text="${post.comments.size()}+' Comments'"></span>
+                    <a th:href="'/comment/'+${post.id}">
+                        <button class="action-button comment-button">Comment</button>
+                    </a>
+                </div>
+                
+                <div class="comments-section">
+                    <div th:each="comment:${post.comments}" class="comment">
+                        <span class="comment-username" th:text="${comment.user.username}"></span>
                         <span th:text="${comment.comment}"></span>
                     </div>
+                </div>
             </div>
         </div>
         <div class="all-caught-up">

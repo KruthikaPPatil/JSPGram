@@ -1,34 +1,149 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Followers</title>
     <style>
-         img{
-            height: 100px;
-        width: 100px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .followers-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        tr {
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s ease;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+        .profile-picture {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.1);
+        }
+
+        .username {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn {
+            background: #f3f4f6;
+            color: #2c3e50;
+        }
+
+        .follow-btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .unfollow-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .followers-container {
+                padding: 10px;
+            }
+            
+            td {
+                padding: 10px;
+            }
+            
+            .profile-picture {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Followers</h1>
-    <table border="1">
-        <tr th:each="user:${followers}">
-            <td><img th:if="${user.imageUrl==null}"
-                src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
-                alt="Profile Picture" class="profile-picture">
-            <img th:if="${user.imageUrl}" th:src="${user.imageUrl}" alt="Profile Picture"
-                class="profile-picture">
-        </td>
-        <td th:text="${user.username}"></td>
-<td><a th:href="'/view-profile/'+${user.id}"><button>View Profile</button></a></td>
-        <td>
-            <a th:if="${!user.isFollowing()}" th:href="'/follow/'+${user.id}"><button>Follow</button></a>
-            <a th:if="${user.isFollowing()}" th:href="'/unfollow/'+${user.id}"><button>Un-Follow</button></a>
-        
-        </td>
-        </tr>
-    </table>
+    <div class="followers-container">
+        <table>
+            <tr th:each="user:${followers}">
+                <td>
+                    <img th:if="${user.imageUrl==null}" src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png" alt="Profile Picture" class="profile-picture">
+                    <img th:if="${user.imageUrl}" th:src="${user.imageUrl}" alt="Profile Picture" class="profile-picture">
+                </td>
+                <td class="username" th:text="${user.username}"></td>
+                <td>
+                    <a th:href="'/view-profile/'+${user.id}">
+                        <button class="btn view-btn">View Profile</button>
+                    </a>
+                </td>
+                <td>
+                    <a th:if="${!user.isFollowing()}" th:href="'/follow/'+${user.id}">
+                        <button class="btn follow-btn">Follow</button>
+                    </a>
+                    <a th:if="${user.isFollowing()}" th:href="'/unfollow/'+${user.id}">
+                        <button class="btn unfollow-btn">Unfollow</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

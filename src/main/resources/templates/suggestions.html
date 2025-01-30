@@ -1,29 +1,114 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Suggested Users</title>
     <style>
-        img{
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .suggestions-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .suggestion-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .suggestion-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-picture {
+            width: 100px;
             height: 100px;
-        width: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+        }
+
+        .username {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .view-btn, .follow-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn {
+            background: #f3f4f6;
+            color: #2c3e50;
+        }
+
+        .follow-btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .view-btn:hover, .follow-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .suggestions-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <table border="1">
-        <tr th:each="suggestion:${suggestions}">
-            <td><img th:if="${suggestion.imageUrl==null}"
-                    src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
-                    alt="Profile Picture" class="profile-picture">
-                <img th:if="${suggestion.imageUrl}" th:src="${suggestion.imageUrl}" alt="Profile Picture"
-                    class="profile-picture">
-            </td>
-            <td th:text="${suggestion.username}"></td>
-            <td><a th:href="'/view-profile/'+${suggestion.id}"><button>View Profile</button></a></td>
-            <td><a th:href="'/follow/'+${suggestion.id}"><button>Follow</button></a></td>
-        </tr>
-    </table>
+    <div class="suggestions-container">
+        <div th:each="suggestion:${suggestions}" class="suggestion-card">
+            <img th:if="${suggestion.imageUrl==null}"
+                src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+                alt="Profile Picture" class="profile-picture">
+            <img th:if="${suggestion.imageUrl}" th:src="${suggestion.imageUrl}" 
+                alt="Profile Picture" class="profile-picture">
+            <div class="username" th:text="${suggestion.username}"></div>
+            <div class="button-group">
+                <a th:href="'/view-profile/'+${suggestion.id}">
+                    <button class="view-btn">View Profile</button>
+                </a>
+                <a th:href="'/follow/'+${suggestion.id}">
+                    <button class="follow-btn">Follow</button>
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
